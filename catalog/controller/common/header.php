@@ -109,9 +109,10 @@ class ControllerCommonHeader extends Controller {
 				// Level 2
 				//声明变量数组
 				$children_data = array();
-   //如果top为真才取每个栏目ID从数据库取栏目数据，取出的是二级目录的数据
+   //如果top为真才取每个栏目ID从数据库取栏目数据，取出的是所有顶级栏目的数据
+				//这里有些疑惑到底取出的是什么
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
-   //
+   //遍历children
 				foreach ($children as $child) {
 					$filter_data = array(
 						'filter_category_id'  => $child['category_id'],
