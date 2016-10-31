@@ -104,6 +104,7 @@ class ControllerCommonHeader extends Controller {
 		foreach ($categories as $category) {
 		//?这个top代表的意义是什么
 		//!如果top值为真,那么就是顶级栏目
+		//这句是说只把顶级取出
 			if ($category['top']) {
 				// Level 2
 				//声明变量数组
