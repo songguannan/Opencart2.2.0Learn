@@ -45,7 +45,7 @@ class ControllerProductCategory extends Controller {
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
-
+//如果不放就建立information目录，如果放就在前面
 		if (isset($this->request->get['path'])) {
 			$url = '';
 

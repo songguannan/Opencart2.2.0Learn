@@ -99,6 +99,8 @@ class ControllerCommonHeader extends Controller {
 //声名数据
 		$data['categories'] = array();
 //通过模型从数据库取数据
+//注意这里的参数,这里取的是parentID
+//父ID为0就应该是顶级栏目
 		$categories = $this->model_catalog_category->getCategories(0);
 //遍历数据
 		foreach ($categories as $category) {
@@ -111,21 +113,29 @@ class ControllerCommonHeader extends Controller {
 				$children_data = array();
    //如果top为真才取每个栏目ID从数据库取栏目数据，取出的是所有顶级栏目的数据
 				//这里有些疑惑到底取出的是什么
+				//因为有确定的父iD所以能找到这iD的子id的所有数据
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
    //遍历children
 				foreach ($children as $child) {
+				//构造查询条件，查询条件是键值对组成的数组
 					$filter_data = array(
+					//第一个键值对是栏目ID
 						'filter_category_id'  => $child['category_id'],
+						//第二个作用未知
 						'filter_sub_category' => true
 					);
-
+    //开始构造子栏目数据
 					$children_data[] = array(
+					//键名就是最后view要用的变量
+					//名称如果配置里有就取，没有就从数据库中以$filter_data为条件查找获得，name好像是栏目总数,name可能会有问题
 						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+						//生成的链接是product/category加主栏目ID加_加子栏目ID
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);
 				}
 
 				// Level 1
+				//这里是顶级栏目，在这里加type，在path后面,
 				$data['categories'][] = array(
 					'name'     => $category['name'],
 					'children' => $children_data,
