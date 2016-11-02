@@ -136,6 +136,7 @@ class ControllerCommonHeader extends Controller {
 
 				// Level 1
 				//这里是顶级栏目，在这里加type，在path后面,
+				//应该在这里判断了，用type判断，然后写不同的链接
 				$data['categories'][] = array(
 					'name'     => $category['name'],
 					'children' => $children_data,
